@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import uriConnection from "../keys"
 
 class serverDatabase {
   constructor() {
@@ -7,7 +8,7 @@ class serverDatabase {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      "mongodb+srv://kevin:123@instabackcluster-xgsvg.gcp.mongodb.net/test?retryWrites=true&w=majority",
+      uriConnection.URI,
       { useNewUrlParser: true, useUnifiedTopology: true }
     );
     console.log("RODOU");
