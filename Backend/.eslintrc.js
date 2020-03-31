@@ -5,10 +5,8 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
-    'prettier'
   ],
   plugins:[
-    'prettier'
   ],
   globals: {
     Atomics: 'readonly',
@@ -19,7 +17,6 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "prettier/prettier":"error",
     "linebreak-style": ["error", "windows"],
     "class-methods-use-this":"off",
     "no-param-reassign":"off",

@@ -1,7 +1,10 @@
-import { Router } from "express";
+import express from "express";
 
-const routes = new Router();
+import userController from "./app/controllers/userController";
+import "./server";
 
-routes.get("/", (req, res) => res.json({ message: "HELLO INSTAGRAM" }));
+const routes = express.Router();
+
+routes.post("/", userController.store);
 
 export default routes;
