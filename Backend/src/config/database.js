@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import uriConnection from "../keys"
+import mongoose from 'mongoose';
+import uriConnection from '../keys';
 
-class serverDatabase {
+class ServerDatabase {
   constructor() {
     this.mongo();
   }
@@ -9,10 +9,10 @@ class serverDatabase {
   mongo() {
     this.mongoConnection = mongoose.connect(
       uriConnection.URI,
-      { useNewUrlParser: true, useUnifiedTopology: true }
+      { useNewUrlParser: true, useUnifiedTopology: true },
     );
-    console.log("RODOU");
+    console.log('RODOU');
   }
 }
 
-export default new serverDatabase();
+export default new ServerDatabase();

@@ -1,25 +1,27 @@
-import User from '../models/userModel';
 import bcrypt from 'bcryptjs';
-import jwt from "jsonwebtoken";
-import keys from "../../keys"
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel';
+import keys from '../../keys';
 
-class SessionnController{
-  async store(req,res){
+class SessionnController {
+  async store(req, res) {
     const { email, password } = req.body;
 
-    /*const user = await User.findOne({$where: function(){
+    /* const user = await User.findOne({$where: function(){
       return (this.email == email);
-    }});*/
+    }}); */
 
-    const user = await User.findOne({email:email}).exec();
+    const user = await User.findOne({ email }).exec();
 
-    if (!user){
-      return res.status(401).json({error:"User not found."});
+    if (!user) {
+      return res.status(401).json({ error: 'User not found.' });
     }
-    if(!(bcrypt.compare(password,user.senha))){
-      return res.status(401).json({error: "Password not match"});
+    if (!(bcrypt.compare(password, user.senha))) {
+      return res.status(401).json({ error: 'Password not match' });
     }
-    const { _id, name, username, nascimento } = user;
+    const {
+      _id, name, username, nascimento,
+    } = user;
 
     return res.json({
       user: {
@@ -27,12 +29,12 @@ class SessionnController{
         name,
         username,
         email,
-        nascimento
+        nascimento,
       },
       token: jwt.sign({ _id }, keys.secret, {
-        expiresIn:keys.tokenExpireIn,
-      })
-    })
+        expiresIn: keys.tokenExpireIn,
+      }),
+    });
   }
 }
 

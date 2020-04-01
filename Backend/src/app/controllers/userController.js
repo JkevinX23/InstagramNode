@@ -1,8 +1,11 @@
-import UserModel from "../models/userModel";
+import bcrypt from 'bcryptjs';
+import UserModel from '../models/userModel';
 
 class UserController {
   async create(req, res) {
-    const { name, email, username, senha, nascimento } = req.body;
+    const {
+      name, email, username, senha, nascimento,
+    } = req.body;
     const user = new UserModel({
       name,
       email,
@@ -11,29 +14,31 @@ class UserController {
       nascimento,
     });
 
-    const auth = await UserModel.findOne({email:email}).exec();
-    if(auth)return res.status(400).json({error:'User already exists.'});
+    const auth = await UserModel.findOne({ email }).exec();
+    if (auth) return res.status(400).json({ error: 'User already exists.' });
     return res.json(await user.save());
-
-
-    /*
-    const userExist = UserModel.findOne({email:email});
-    console.log(userExist);
-    if(userExist){
-      return res.status(400).json({error:'User already exists.'});
-    }
-    return res.json(await user.save());
-
- var resp = 0;
-    var query = UserModel.where({email:email});
-    query.findOne(function (err, user){
-      if(err) resp = 1;
-      if(user)resp = 2;
-    });
-    if(resp == 0)return res.json(await user.save());
-    if(resp == 1)return res.status(400).json({error:"Error"});
-    if(resp == 2) return res.status(401).json({error:'Email already exists.'});
   }
-  }*/
-  }}
+
+  async update(req, res) {
+    const { username, password, oldPassword } = req.body;
+    const User = await UserModel.findById(req.userId).exec();
+    const validacao = await bcrypt.compare(oldPassword, User.senha);
+    console.log(validacao);
+    if (!validacao) {
+      return res.status(401).json({ error: 'Password not match' });
+    }
+    if (password) {
+      const senhaHash = await bcrypt.hash(password, 8);
+      await User.updateOne({ senha: senhaHash }).exec();
+      return res.json({ message: 'Senha alterada com sucesso' });
+    }
+
+    if (username && !(await UserModel.findOne({ username }).exec())) {
+      await User.updateOne({ username }).exec();
+      return res.json({ message: 'Alteração do username realizada com sucesso' });
+    }
+
+    return res.json({ message: 'Este username já existe' });
+  }
+}
 export default new UserController();
