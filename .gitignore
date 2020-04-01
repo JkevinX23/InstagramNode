@@ -105,3 +105,6 @@ dist
 
 #Ignore Keys
 keys.js
+
+#Ignore Temp Directory
+temp/

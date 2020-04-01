@@ -16,6 +16,8 @@ class UserController {
 
     const auth = await UserModel.findOne({ email }).exec();
     if (auth) return res.status(400).json({ error: 'User already exists.' });
+    const nick = await UserModel.findOne({ username }).exec();
+    if (nick) return res.status(400).json({ error: 'Username already exists.' });
     return res.json(await user.save());
   }
 
