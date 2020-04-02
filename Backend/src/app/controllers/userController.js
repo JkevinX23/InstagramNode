@@ -4,7 +4,7 @@ import UserModel from '../models/userModel';
 class UserController {
   async create(req, res) {
     const {
-      name, email, username, senha, nascimento,
+      name, email, username, senha, nascimento, bio
     } = req.body;
     const user = new UserModel({
       name,
@@ -12,6 +12,7 @@ class UserController {
       username,
       senha,
       nascimento,
+      bio
     });
 
     const auth = await UserModel.findOne({ email }).exec();
@@ -25,7 +26,6 @@ class UserController {
     const { username, password, oldPassword } = req.body;
     const User = await UserModel.findById(req.userId).exec();
     const validacao = await bcrypt.compare(oldPassword, User.senha);
-    console.log(validacao);
     if (!validacao) {
       return res.status(401).json({ error: 'Password not match' });
     }

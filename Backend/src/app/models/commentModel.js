@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
 
 const { Schema } = mongoose;
 
@@ -7,10 +6,8 @@ const Comentarios = new Schema({
   id: String,
   id_user: String,
   id_publicacao: String,
-  create_in: Date,
-  update_in: String,
   exclude_in: String,
-});
+},{timestamps : { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
 
-export default mongoose.model('Comentarios'.concat(this.id_publicacao), Comentarios);
+export default mongoose.model('Comentarios'.concat(this.id), Comentarios);

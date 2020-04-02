@@ -7,10 +7,6 @@ class SessionnController {
   async store(req, res) {
     const { email, password } = req.body;
 
-    /* const user = await User.findOne({$where: function(){
-      return (this.email == email);
-    }}); */
-
     const user = await User.findOne({ email }).exec();
 
     if (!user) {
@@ -31,8 +27,8 @@ class SessionnController {
         email,
         nascimento,
       },
-      token: jwt.sign({ _id }, keys.secret, {
-        expiresIn: keys.tokenExpireIn,
+      token: jwt.sign({ _id }, keys.secret(), {
+        expiresIn: keys.tokenExpireIn(),
       }),
     });
   }

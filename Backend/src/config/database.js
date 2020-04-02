@@ -8,7 +8,7 @@ class ServerDatabase {
 
   mongo() {
     this.mongoConnection = mongoose.connect(
-      uriConnection.URI,
+      uriConnection.URI(),
       { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex: true },
     );
     console.log('RODOU');

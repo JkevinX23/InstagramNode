@@ -1,19 +1,49 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import keys from '../../keys';
 
-const { Schema } = mongoose;
+const Publicacao = new mongoose.Schema(
+  {
+    path: { 
+      type: String,
+      unique: true,
+    },
 
-const Publicacao = new Schema({
-  id: String,
-  path: String,
-  create_in: Date,
-  exclude_in: String,
-  update_in: String,
-  id_user: String,
-  id_table_like: String,
-  id_table_comment: String
-});
+    id_user: { 
+      type: String,
+      required: true,
+    },
 
+    tb_like: { 
+      type: String,
+      unique: true,
+    },
 
+    tb_comment: { 
+      type: String,
+      unique: true,
+    },
 
-export default mongoose.model('Publicacao'.concat(this.id_user), Publicacao);
+    descricao: { 
+      type: String,
+      required: false,
+    },
+  },
+  {
+    timestamps : 
+      { 
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at',
+        delete_at: 'delete_at'
+      }
+  });
+
+Publicacao
+  .pre('save', function (next)
+    {
+      this.tb_comment = keys.idCommentTable();
+      this.tb_like = keys.idTableLike();
+      next();
+    }
+  );
+
+export default mongoose.model('Publicacoes', Publicacao);
