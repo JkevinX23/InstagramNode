@@ -7,6 +7,7 @@ import userController from './app/controllers/userController';
 import middlewareAuth from './app/middlewares/auth';
 import './server';
 import publicController from './app/controllers/publicController';
+import flowController from './app/controllers/flowController';
 
 const upload = multer(multerConfig);
 
@@ -20,6 +21,9 @@ routes.use(middlewareAuth);
 routes.put('/user', userController.update);
 routes.get('/profile', userController.profile);
 routes.post('/publicar', upload.single('file'), publicController.create);
+routes.post('/flow', flowController.create);
+routes.get('/flow', flowController.listage);
+routes.get('/feed',publicController.listage)
 
 /* routes.post('/files', upload.single('file'), (req,res) =>{
   return res.json({ ok:true});
