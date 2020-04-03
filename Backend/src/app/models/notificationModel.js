@@ -2,12 +2,32 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const Notificacao = new Schema({
-  id: String,
-  type: String,
-  Description: String,
-  Read: Boolean,
-}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
+const Notificacao = new Schema(
+  {
+    id_user: 
+      {
+        type: String
+      },
+    type: 
+      {
+        type: String
+      },
+    content: 
+      {
+        type: String
+      },
+    read: 
+      {
+        type: Boolean,
+        default: false,
+      },
+  }, 
+  { 
+    timestamps: 
+      { 
+        createdAt: 'created_at', 
+        updatedAt: 'updated_at' 
+      } 
+  });
 
-
-export default mongoose.model('Notificacao'.concat(this.id), Notificacao);
+export default mongoose.model('Notificacao', Notificacao);
