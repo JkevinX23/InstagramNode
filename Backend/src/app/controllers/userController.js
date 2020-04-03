@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import UserModel from '../models/userModel';
+import PublicModel from '../models/publicModel';
 
 class UserController {
   async create(req, res) {
     const {
-      name, email, username, senha, nascimento, bio
+      name, email, username, senha, nascimento, bio,
     } = req.body;
     const user = new UserModel({
       name,
@@ -12,7 +13,7 @@ class UserController {
       username,
       senha,
       nascimento,
-      bio
+      bio,
     });
 
     const auth = await UserModel.findOne({ email }).exec();
@@ -41,6 +42,12 @@ class UserController {
     }
 
     return res.json({ message: 'Este username já existe' });
+  }
+
+  async profile(req, res) {
+    const Publicacoes = await PublicModel.find({ id_user: req.userId }).exec();
+    if (Publicacoes) return res.json({ Publicacoes });
+    return res.json({ message: 'Nenhuma publicação' });
   }
 }
 export default new UserController();

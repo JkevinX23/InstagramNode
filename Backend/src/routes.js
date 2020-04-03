@@ -18,9 +18,11 @@ routes.post('/session', sessionController.store);
 /* ROTAS QUE PRECISAM DE AUTENTICAÇÃO ABAIXO */
 routes.use(middlewareAuth);
 routes.put('/user', userController.update);
-routes.post('/publicar',upload.single('file'),publicController.create);
-/*routes.post('/files', upload.single('file'), (req,res) =>{
+routes.get('/profile', userController.profile);
+routes.post('/publicar', upload.single('file'), publicController.create);
+
+/* routes.post('/files', upload.single('file'), (req,res) =>{
   return res.json({ ok:true});
-});*/
+}); */
 
 export default routes;

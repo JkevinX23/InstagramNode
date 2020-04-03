@@ -7,7 +7,7 @@ const Comentarios = new Schema({
   id_user: String,
   id_publicacao: String,
   exclude_in: String,
-},{timestamps : { createdAt: 'created_at', updatedAt: 'updated_at' }});
+}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 
 export default mongoose.model('Comentarios'.concat(this.id), Comentarios);
