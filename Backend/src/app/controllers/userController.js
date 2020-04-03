@@ -3,7 +3,7 @@ import UserModel from '../models/userModel';
 import PublicModel from '../models/publicModel';
 
 class UserController {
-  async create(req, res) {
+  async store(req, res) {
     const {
       name, email, username, senha, nascimento, bio,
     } = req.body;

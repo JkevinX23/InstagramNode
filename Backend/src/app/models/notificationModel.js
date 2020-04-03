@@ -4,30 +4,31 @@ const { Schema } = mongoose;
 
 const Notificacao = new Schema(
   {
-    id_user: 
+    id_user:
       {
-        type: String
+        type: String,
       },
-    type: 
+    type:
       {
-        type: String
+        type: String,
       },
-    content: 
+    content:
       {
-        type: String
+        type: String,
       },
-    read: 
+    read:
       {
         type: Boolean,
         default: false,
       },
-  }, 
-  { 
-    timestamps: 
-      { 
-        createdAt: 'created_at', 
-        updatedAt: 'updated_at' 
-      } 
-  });
+  },
+  {
+    timestamps:
+      {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+      },
+  },
+);
 
 export default mongoose.model('Notificacao', Notificacao);

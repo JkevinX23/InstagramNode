@@ -1,11 +1,10 @@
-import publicModel from '../models/publicModel';
+import PublicModel from '../models/publicModel';
 import FirebaseAcess from '../../config/firebase';
-import flowModel from '../models/flows';
-import publicationModel from '../models/publicModel';
+import FlowModel from '../models/flows';
 
 
 class PublicController {
-  async create(req, res) {
+  async store(req, res) {
     // const {descricao} = req.body;
 
     const id_user = req.userId;
@@ -14,7 +13,7 @@ class PublicController {
 
     const path = req.file.filename;
 
-    const publicacao = await new publicModel(
+    const publicacao = await new PublicModel(
       {
         // descricao: descricao,
         id_user,
@@ -25,13 +24,19 @@ class PublicController {
     return res.json(await publicacao.save());
   }
 
-  async listage(req,res){
+  async index(req, res) {
     const currentUser = req.userId;
-    const flowers = await flowModel.find({"user_id": currentUser, "active": true});
-    var publicacoes = new Array();
+    const flowers = await FlowModel.find({ user_id: currentUser, active: true });
+    const publicacoes = new Array();
     for (let i = 0; i < flowers.length; i++) {
-      publicacoes.push(await publicationModel.find({id_user: flowers[i].flowed_id}));
+      publicacoes.push(await PublicModel
+        .find(
+          { id_user: flowers[i].flowed_id },
+        )
+        .sort([
+          ['updatedAt', 'descending']]));
     }
+
     return res.json(publicacoes);
   }
 }

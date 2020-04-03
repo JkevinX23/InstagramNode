@@ -1,6 +1,5 @@
 import { Storage } from '@google-cloud/storage';
 import keys from '../keys';
-import { resolve } from 'path';
 
 
 const keyFilename = keys.keyFilename();
@@ -24,8 +23,8 @@ class FirebaseAcess {
         console.log({ apiResponse });
       });
   }
-  /*async getFile(path){
-    const options  = { 
+  /* async getFile(path){
+    const options  = {
       destination: resolve(__dirname, '..', '..', 'temp', 'uploads'),
     };
 
@@ -37,9 +36,9 @@ class FirebaseAcess {
         const file = data[0];
         return console.log({apiresponse: data[1]})
       });
-    
+
     return {status: "ok" };
-  
-  }*/
+
+  } */
 }
 export default new FirebaseAcess();
