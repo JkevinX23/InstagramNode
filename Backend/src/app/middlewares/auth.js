@@ -12,6 +12,7 @@ export default async (req, res, next) => {
   try {
     const valid = await promisify(jwt.verify)(token, secret.secret());
     req.userId = valid._id;
+    req.username = valid.username;
     return next();
   } catch (err) {
     return res.status(401).json({ error: err });

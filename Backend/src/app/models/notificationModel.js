@@ -21,6 +21,10 @@ const Notificacao = new Schema(
         type: Boolean,
         default: false,
       },
+    id_public:
+      {
+        type: String,
+      },
   },
   {
     timestamps:
