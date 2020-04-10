@@ -28,6 +28,7 @@ routes.use(middlewareAuth);
 
 routes.put('/user', userController.update);
 routes.get('/profile', userController.profile);
+routes.get('/user', userController.userInfo);
 
 routes.post('/public', upload.single('file'), publicController.store);
 routes.get('/feed', publicController.index);

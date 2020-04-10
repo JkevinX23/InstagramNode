@@ -49,5 +49,10 @@ class UserController {
     if (Publicacoes) return res.json({ Publicacoes });
     return res.json({ message: 'Nenhuma publicação' });
   }
+  
+  async userInfo(req,res){
+    return res.json(await UserModel.findById({_id: req.userId}))
+  }
+
 }
 export default new UserController();
