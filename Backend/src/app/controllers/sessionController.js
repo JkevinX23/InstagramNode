@@ -12,7 +12,7 @@ class SessionnController {
     if (!user) {
       return res.status(401).json({ error: 'User not found.' });
     }
-    if (!(bcrypt.compare(password, user.senha))) {
+    if (!(await bcrypt.compare(password, user.senha))) {
       return res.status(401).json({ error: 'Password not match' });
     }
     const {

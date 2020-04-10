@@ -48,7 +48,7 @@ const User = new Schema(
     unique: true,
   },
 
-    senha:
+    password:
   {
     type: String,
     required: true,
@@ -81,8 +81,8 @@ const User = new Schema(
 );
 
 User.pre('save', async function (next) {
-  const senhaHash = await bcrypt.hash(this.senha, 8);
-  this.senha = senhaHash;
+  const senhaHash = await bcrypt.hash(this.password, 8);
+  this.password = senhaHash;
   this.publicId = keys.publicId();
   this.flowTableID = keys.flowTableID();
   this.notificationTableId = keys.notificationTableId();

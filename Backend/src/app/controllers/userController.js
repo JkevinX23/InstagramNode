@@ -5,13 +5,13 @@ import PublicModel from '../models/publicModel';
 class UserController {
   async store(req, res) {
     const {
-      name, email, username, senha, nascimento, bio,
+      name, email, username, password, nascimento, bio,
     } = req.body;
     const user = new UserModel({
       name,
       email,
       username,
-      senha,
+      password,
       nascimento,
       bio,
     });
@@ -32,7 +32,7 @@ class UserController {
     }
     if (password) {
       const senhaHash = await bcrypt.hash(password, 8);
-      await User.updateOne({ senha: senhaHash }).exec();
+      await User.updateOne({ password: senhaHash }).exec();
       return res.json({ message: 'Senha alterada com sucesso' });
     }
 

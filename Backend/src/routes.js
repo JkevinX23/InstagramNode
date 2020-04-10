@@ -17,6 +17,9 @@ const upload = multer(multerConfig);
 
 const routes = express.Router();
 
+routes.get('/',(req,res) => {
+  return res.json({Test: "OKAY"});
+});
 routes.post('/cadastrar', userController.store);
 routes.post('/session', sessionController.store); // LogIn
 
