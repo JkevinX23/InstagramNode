@@ -1,7 +1,6 @@
 import PublicModel from '../models/publicModel';
 import FirebaseAcess from '../../config/firebase';
 import FlowModel from '../models/flows';
-import userModel from '../models/userModel';
 
 
 class PublicController {

@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import UserModel from '../models/userModel';
 import PublicModel from '../models/publicModel';
+import FirebaseAcess from '../../config/firebase';
 
 class UserController {
   async store(req, res) {
@@ -49,10 +50,26 @@ class UserController {
     if (Publicacoes) return res.json({ Publicacoes });
     return res.json({ message: 'Nenhuma publicação' });
   }
-  
-  async userInfo(req,res){
-    return res.json(await UserModel.findById({_id: req.userId}))
+
+  async userInfo(req, res) {
+    return res.json(await UserModel.findById({ _id: req.userId }));
   }
 
+  async set_photo(req, res) {
+    const id_user = req.userId;
+    FirebaseAcess.uploadFile(req.file.path);
+    const path = req.file.filename;
+
+    const user = await UserModel.findById(id_user);
+
+    if (user) {
+      user.profilePhoto = path;
+
+
+      return res.json(await user.save());
+    }
+    return res.status(401).json({ error: 'User not found' });
+  }
 }
+
 export default new UserController();

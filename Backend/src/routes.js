@@ -11,15 +11,12 @@ import userController from './app/controllers/userController';
 import publicController from './app/controllers/publicController';
 import flowController from './app/controllers/flowController';
 import notificationController from './app/controllers/notificationController';
-import LikeController from './app/controllers/LikeController';
 
 const upload = multer(multerConfig);
 
 const routes = express.Router();
 
-routes.get('/',(req,res) => {
-  return res.json({Test: "OKAY"});
-});
+routes.get('/', (req, res) => res.json({ Test: 'OKAY' }));
 routes.post('/cadastrar', userController.store);
 routes.post('/session', sessionController.store); // LogIn
 
@@ -29,6 +26,7 @@ routes.use(middlewareAuth);
 routes.put('/user', userController.update);
 routes.get('/profile', userController.profile);
 routes.get('/user', userController.userInfo);
+routes.put('/user/photo', upload.single('file'), userController.set_photo);
 
 routes.post('/public', upload.single('file'), publicController.store);
 routes.get('/feed', publicController.index);
