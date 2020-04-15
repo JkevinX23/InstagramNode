@@ -23,22 +23,22 @@ class FirebaseAcess {
         console.log({ apiResponse });
       });
   }
-  /* async getFile(path){
-    const options  = {
-      destination: resolve(__dirname, '..', '..', 'temp', 'uploads'),
-    };
 
-    await storage
+
+  async getFile(path) {
+    const link = await storage
       .bucket(bucketName)
       .file(path)
-      .get()
-      .then(function(data) {
-        const file = data[0];
-        return console.log({apiresponse: data[1]})
+      .getSignedUrl({
+        action: 'read',
+        expires: '03-09-2030',
+      })
+      .then((signedUrls) => {
+        console.log({ signedUrls });
+        return signedUrls[0];
       });
 
-    return {status: "ok" };
-
-  } */
+    return link;
+  }
 }
 export default new FirebaseAcess();

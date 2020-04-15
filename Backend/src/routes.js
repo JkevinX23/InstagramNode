@@ -27,6 +27,7 @@ routes.put('/user', userController.update);
 routes.get('/profile', userController.profile);
 routes.get('/user', userController.userInfo);
 routes.put('/user/photo', upload.single('file'), userController.set_photo);
+routes.get('/user/photo', userController.getPhoto);
 
 routes.post('/public', upload.single('file'), publicController.store);
 routes.get('/feed', publicController.index);

@@ -63,12 +63,15 @@ class UserController {
     const user = await UserModel.findById(id_user);
 
     if (user) {
-      user.profilePhoto = path;
-
-
-      return res.json(await user.save());
+      return res.json(await user.updateOne({ profilePhoto: path }));
     }
     return res.status(401).json({ error: 'User not found' });
+  }
+
+  async getPhoto(req, res) {
+    const user = await UserModel.findById(req.userId).exec();
+    const fileUrl = await FirebaseAcess.getFile(user.profilePhoto);
+    res.json({ fileUrl });
   }
 }
 
