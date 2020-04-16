@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const Comentarios = new Schema(
   {
-    id_user: String,
-    id_publicacao: String,
+    iduser: String,
+    idpublic: String,
     content: String,
   },
   {

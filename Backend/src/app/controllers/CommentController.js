@@ -1,40 +1,39 @@
 import CommentModel from '../models/commentModel';
 import NotificationModel from '../models/notificationModel';
 import PulicModel from '../models/publicModel';
+import userModel from '../models/userModel';
 
 class Comment {
   async store(req, res) {
-    const { id_publicacao, content } = req.body;
-    const currentUser = req.userId;
-    const { username } = req;
+    const { idpublic, content } = req.body;
+    const currentUser = req.iduser;
     const comment = new CommentModel(
       {
-        id_user: currentUser,
-        id_publicacao,
+        iduser: currentUser,
+        idpublic,
         content,
       },
     );
 
-    comment.save();
-
-    const { id_user } = PulicModel.findById({ _id: id_publicacao });
+    const { iduser } = await PulicModel.findById({ _id: idpublic });
+    const { username } = await userModel.findById({ _id: iduser });
 
     const notificacao = new NotificationModel(
       {
-        id_user,
+        iduser,
         type: 'Comment',
-        content: `${username} comentou sua publicação.`,
+        content: `@${username} comentou sua publicação.`,
       },
     );
 
     notificacao.save();
 
-    return res.json('Comentário realizado com sucesso. ');
+    return res.json(await comment.save());
   }
 
   async index(req, res) {
     const { _id } = req.body;
-    const comments = await CommentModel.find({ public_id: _id });
+    const comments = await CommentModel.find({ idpublic: _id });
     return res.json(comments);
   }
 }

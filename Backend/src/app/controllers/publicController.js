@@ -7,7 +7,7 @@ class PublicController {
   async store(req, res) {
     // const {descricao} = req.body;
 
-    const id_user = req.userId;
+    const { iduser } = req;
 
     FirebaseAcess.uploadFile(req.file.path);
 
@@ -16,7 +16,7 @@ class PublicController {
     const publicacao = await new PublicModel(
       {
         // descricao: descricao,
-        id_user,
+        iduser,
         path,
       },
     );
@@ -25,16 +25,12 @@ class PublicController {
   }
 
   async index(req, res) {
-    const currentUser = req.userId;
-    const flowers = await FlowModel.find({ user_id: currentUser, active: true });
-    const publicacoes = new Array();
+    const currentUser = req.iduser;
+    const flowers = await FlowModel.find({ iduser: currentUser, active: true });
+    const publicacoes = [];
     for (let i = 0; i < flowers.length; i++) {
       publicacoes.push(await PublicModel
-        .find(
-          { id_user: flowers[i].flowed_id },
-        )
-        .sort([
-          ['updatedAt', 'descending']]));
+        .find({ iduser: flowers[i].idflowed }));
     }
 
     return res.json(publicacoes);

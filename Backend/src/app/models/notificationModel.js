@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const Notificacao = new Schema(
   {
-    id_user:
+    iduser:
       {
         type: String,
       },
@@ -21,7 +21,7 @@ const Notificacao = new Schema(
         type: Boolean,
         default: false,
       },
-    id_public:
+    idpublic:
       {
         type: String,
       },

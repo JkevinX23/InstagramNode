@@ -1,26 +1,29 @@
 import LikeModel from '../models/likeModel';
 import NotifModel from '../models/notificationModel';
+import PulicModel from '../models/publicModel';
+import userModel from '../models/userModel';
 
 class Like {
   async store(req, res) {
+    const { idpublic } = req.body;
+
     const like = new LikeModel(
       {
-        user_id: req.userId,
-        public_id: req.header('publicId'),
+        iduser: req.userId,
+        idpublic,
       },
     );
 
     try {
-      like.save();
-
-      const { id_user, _id } = req.body;
+      const { iduser } = await PulicModel.findById({ _id: idpublic });
+      const { username } = await userModel.findById({ _id: iduser });
 
       const notificacao = new NotifModel(
         {
-          id_user,
+          iduser,
           type: 'Like',
-          content: `${req.username} curtiu sua publicacao`,
-          id_public: _id,
+          content: `@${username} curtiu sua publicacao`,
+          idpublic,
         },
       );
 
@@ -28,12 +31,12 @@ class Like {
     } catch (err) {
       return res.status(401).json({ error: 'Like control store error' });
     }
-    return res.json({ status: 'ok' });
+    return res.json(await like.save());
   }
 
   async index(req, res) {
     const { _id } = req.body;
-    return res.json(await LikeModel.find({ public_id: _id }));
+    return res.json(await LikeModel.find({ idpublic: _id }));
   }
 }
 

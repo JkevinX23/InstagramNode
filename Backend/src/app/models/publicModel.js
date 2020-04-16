@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import keys from '../../keys';
 
 const Publicacao = new mongoose.Schema(
   {
@@ -8,19 +7,9 @@ const Publicacao = new mongoose.Schema(
       unique: true,
     },
 
-    id_user: {
+    iduser: {
       type: String,
       required: true,
-    },
-
-    tb_like: {
-      type: String,
-      unique: true,
-    },
-
-    tb_comment: {
-      type: String,
-      unique: true,
     },
 
     descricao: {
@@ -37,12 +26,5 @@ const Publicacao = new mongoose.Schema(
       },
   },
 );
-
-Publicacao
-  .pre('save', function (next) {
-    this.tb_comment = keys.idCommentTable();
-    this.tb_like = keys.idTableLike();
-    next();
-  });
 
 export default mongoose.model('Publicacoes', Publicacao);

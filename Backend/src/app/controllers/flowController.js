@@ -5,21 +5,21 @@ import Notification from '../models/notificationModel';
 class Flow {
   async store(req, res) {
     const userFlow = req.header('UserID');
-    const { userId } = req;
+    const { iduser } = req;
     const validation = await UserModel.findById({ _id: userFlow });
 
     if (validation) {
       const model = new FlowModel(
         {
           active: true,
-          flowed_id: userFlow,
-          user_id: userId,
+          idflowed: userFlow,
+          iduser,
         },
       );
 
       const notificacao = new Notification(
         {
-          id_user: validation._id,
+          iduser: validation._id,
           type: 'Flow',
           content: `${validation.username} começou a seguir você`,
         },
@@ -33,10 +33,10 @@ class Flow {
   }
 
   async index(req, res) {
-    const { userId } = req;
+    const { iduser } = req;
 
     return res.json(
-      await FlowModel.find({ user_id: userId })
+      await FlowModel.find({ user_id: iduser })
         .sort('createAt')
         .limit(20),
     );

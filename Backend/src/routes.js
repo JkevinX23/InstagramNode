@@ -11,6 +11,8 @@ import userController from './app/controllers/userController';
 import publicController from './app/controllers/publicController';
 import flowController from './app/controllers/flowController';
 import notificationController from './app/controllers/notificationController';
+import LikeController from './app/controllers/LikeController';
+import CommentController from './app/controllers/CommentController';
 
 const upload = multer(multerConfig);
 
@@ -30,6 +32,9 @@ routes.put('/user/photo', upload.single('file'), userController.set_photo);
 routes.get('/user/photo', userController.getPhoto);
 
 routes.post('/public', upload.single('file'), publicController.store);
+routes.post('/public/like', LikeController.store);
+routes.post('/public/comment', CommentController.store);
+
 routes.get('/feed', publicController.index);
 
 routes.post('/flow', flowController.store);

@@ -25,9 +25,9 @@ class UserController {
   }
 
   async update(req, res) {
-    const { username, password, oldPassword } = req.body;
-    const User = await UserModel.findById(req.userId).exec();
-    const validacao = await bcrypt.compare(oldPassword, User.senha);
+    const { username, password, oldpassword } = req.body;
+    const User = await UserModel.findById(req.iduser).exec();
+    const validacao = await bcrypt.compare(oldpassword, User.senha);
     if (!validacao) {
       return res.status(401).json({ error: 'Password not match' });
     }
@@ -46,31 +46,31 @@ class UserController {
   }
 
   async profile(req, res) {
-    const Publicacoes = await PublicModel.find({ id_user: req.userId }).exec();
+    const Publicacoes = await PublicModel.find({ iduser: req.iduser }).exec();
     if (Publicacoes) return res.json({ Publicacoes });
     return res.json({ message: 'Nenhuma publicação' });
   }
 
   async userInfo(req, res) {
-    return res.json(await UserModel.findById({ _id: req.userId }));
+    return res.json(await UserModel.findById({ _id: req.iduser }));
   }
 
   async set_photo(req, res) {
-    const id_user = req.userId;
+    const { iduser } = req;
     FirebaseAcess.uploadFile(req.file.path);
     const path = req.file.filename;
 
-    const user = await UserModel.findById(id_user);
+    const user = await UserModel.findById(iduser);
 
     if (user) {
-      return res.json(await user.updateOne({ profilePhoto: path }));
+      return res.json(await user.updateOne({ profilephoto: path }));
     }
     return res.status(401).json({ error: 'User not found' });
   }
 
   async getPhoto(req, res) {
-    const user = await UserModel.findById(req.userId).exec();
-    const fileUrl = await FirebaseAcess.getFile(user.profilePhoto);
+    const user = await UserModel.findById(req.iduser).exec();
+    const fileUrl = await FirebaseAcess.getFile(user.profilephoto);
     res.json({ fileUrl });
   }
 }

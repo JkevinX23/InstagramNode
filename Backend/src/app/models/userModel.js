@@ -1,28 +1,11 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import keys from '../../keys';
 
 const { Schema } = mongoose;
 const User = new Schema(
   {
-    publicId:
-  {
-    type: String,
-    unique: true,
-  },
 
-    flowTableID:
-  {
-    type: String,
-    unique: true,
-  },
-
-    notificationTableId:
-  {
-    type: String,
-  },
-
-    flowAbble:
+    flowabble:
   {
     type: Boolean,
     default: true,
@@ -65,7 +48,7 @@ const User = new Schema(
     type: String,
   },
 
-    profilePhoto:
+    profilephoto:
   {
     type: String,
   },
@@ -83,10 +66,6 @@ const User = new Schema(
 User.pre('save', async function (next) {
   const senhaHash = await bcrypt.hash(this.password, 8);
   this.password = senhaHash;
-  this.publicId = keys.publicId();
-  this.flowTableID = keys.flowTableID();
-  this.notificationTableId = keys.notificationTableId();
-
   next();
 });
 
