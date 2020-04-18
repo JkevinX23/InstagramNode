@@ -33,7 +33,23 @@ class PublicController {
         .find({ iduser: flowers[i].idflowed }));
     }
 
-    return res.json(publicacoes);
+    const p = [];
+
+    for (let i = 0; i < publicacoes.length; i += 1) {
+      for (let j = 0; j < publicacoes[i].length; j += 1) {
+        p.push(publicacoes[i][j]);
+      }
+    }
+
+    p.sort((a, b) => b.created_at - a.created_at);
+
+    return res.json(p);
+  }
+
+  async getPic(req, res) {
+    const { path } = req.body;
+    const fileUrl = await FirebaseAcess.getFile(path);
+    res.json({ fileUrl });
   }
 }
 

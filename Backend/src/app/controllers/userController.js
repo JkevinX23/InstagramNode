@@ -55,6 +55,10 @@ class UserController {
     return res.json(await UserModel.findById({ _id: req.iduser }));
   }
 
+  async getUserFromID(req, res) {
+    return res.json(await UserModel.findById({ _id: req.body.iduser }));
+  }
+
   async set_photo(req, res) {
     const { iduser } = req;
     FirebaseAcess.uploadFile(req.file.path);
@@ -71,7 +75,17 @@ class UserController {
   async getPhoto(req, res) {
     const user = await UserModel.findById(req.iduser).exec();
     const fileUrl = await FirebaseAcess.getFile(user.profilephoto);
-    res.json({ fileUrl });
+    return res.json({ fileUrl });
+  }
+
+  async getProfilePhoto(req, res) {
+    const { _id } = req.body;
+    const user = await UserModel.findById(_id).exec();
+    if (user) {
+      const fileUrl = await FirebaseAcess.getFile(user.profilephoto);
+      return res.json({ fileUrl });
+    }
+    return res.status(401).json({ error: 'User not found' });
   }
 }
 

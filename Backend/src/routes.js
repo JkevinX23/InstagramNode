@@ -32,8 +32,11 @@ routes.put('/user/photo', upload.single('file'), userController.set_photo);
 routes.get('/user/photo', userController.getPhoto);
 
 routes.post('/public', upload.single('file'), publicController.store);
+routes.post('/public/pic', publicController.getPic);
 routes.post('/public/like', LikeController.store);
 routes.post('/public/comment', CommentController.store);
+routes.post('/public/profile', userController.getProfilePhoto);
+routes.post('/public/profile/user', userController.getUserFromID);
 
 routes.get('/feed', publicController.index);
 
