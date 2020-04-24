@@ -35,6 +35,9 @@ routes.post('/public', upload.single('file'), publicController.store);
 routes.post('/public/pic', publicController.getPic);
 routes.post('/public/like', LikeController.store);
 routes.post('/public/comment', CommentController.store);
+
+routes.get('/public/comment/:id', CommentController.index);
+
 routes.post('/public/profile', userController.getProfilePhoto);
 routes.post('/public/profile/user', userController.getUserFromID);
 

@@ -32,8 +32,9 @@ class Comment {
   }
 
   async index(req, res) {
-    const { _id } = req.body;
-    const comments = await CommentModel.find({ idpublic: _id });
+    const { id } = req.params;
+    const comments = await CommentModel.find({ idpublic: id });
+    comments.sort((a, b) => b.created_at - a.created_at);
     return res.json(comments);
   }
 }
