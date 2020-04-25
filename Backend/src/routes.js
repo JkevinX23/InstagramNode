@@ -28,6 +28,7 @@ routes.use(middlewareAuth);
 routes.put('/user', userController.update);
 routes.get('/profile', userController.profile);
 routes.get('/user', userController.userInfo);
+routes.get('/user/index', userController.index);
 routes.put('/user/photo', upload.single('file'), userController.set_photo);
 routes.get('/user/photo', userController.getPhoto);
 
@@ -35,6 +36,7 @@ routes.post('/public', upload.single('file'), publicController.store);
 routes.post('/public/pic', publicController.getPic);
 routes.post('/public/like', LikeController.store);
 routes.post('/public/comment', CommentController.store);
+routes.post('/public/desc', publicController.postdesc);
 
 routes.get('/public/comment/:id', CommentController.index);
 

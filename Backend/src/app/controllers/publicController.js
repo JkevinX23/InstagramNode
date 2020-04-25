@@ -5,15 +5,13 @@ import FlowModel from '../models/flows';
 
 class PublicController {
   async store(req, res) {
-    // const {descricao} = req.body;
-
     const { iduser } = req;
 
     FirebaseAcess.uploadFile(req.file.path);
 
     const path = req.file.filename;
 
-    const publicacao = await new PublicModel(
+    const publicacao = new PublicModel(
       {
         // descricao: descricao,
         iduser,
@@ -22,6 +20,18 @@ class PublicController {
     );
 
     return res.json(await publicacao.save());
+  }
+
+  async postdesc(req, res) {
+    const { description } = req.body;
+
+    const { idpublic } = req.body;
+
+    const publication = await PublicModel.findById(idpublic);
+
+    const response = await publication.updateOne({ descricao: description });
+
+    return res.json({ response });
   }
 
   async index(req, res) {

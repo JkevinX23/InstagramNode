@@ -15,6 +15,7 @@ const Publicacao = new mongoose.Schema(
     descricao: {
       type: String,
       required: false,
+      default: ' ',
     },
   },
   {

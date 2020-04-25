@@ -87,6 +87,18 @@ class UserController {
     }
     return res.status(401).json({ error: 'User not found' });
   }
+
+  async index(req, res) {
+    const users = await UserModel.find({ flowabble: true }, {
+      _id: 1,
+      flowabble: 1,
+      name: 1,
+      username: 1,
+      bio: 1,
+      profilephoto: 1,
+    });
+    return res.json(users);
+  }
 }
 
 export default new UserController();
