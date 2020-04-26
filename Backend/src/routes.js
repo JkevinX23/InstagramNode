@@ -34,9 +34,11 @@ routes.get('/user/photo', userController.getPhoto);
 
 routes.post('/public', upload.single('file'), publicController.store);
 routes.post('/public/pic', publicController.getPic);
-routes.post('/public/like', LikeController.store);
+routes.get('/public/like/:id', LikeController.store);
+routes.get('public/like', LikeController.index);
 routes.post('/public/comment', CommentController.store);
 routes.post('/public/desc', publicController.postdesc);
+routes.get('/public/:id', publicController.indexuser);
 
 routes.get('/public/comment/:id', CommentController.index);
 
@@ -45,7 +47,7 @@ routes.post('/public/profile/user', userController.getUserFromID);
 
 routes.get('/feed', publicController.index);
 
-routes.post('/flow', flowController.store);
+routes.get('/flow/:id', flowController.store);
 routes.get('/flow', flowController.index);
 
 routes.get('/notifications', notificationController.index);

@@ -5,17 +5,16 @@ import userModel from '../models/userModel';
 
 class Like {
   async store(req, res) {
-    const { idpublic } = req.body;
-
+    const { id } = req.params;
     const like = new LikeModel(
       {
-        iduser: req.userId,
-        idpublic,
+        iduser: req.iduser,
+        idpublic: id,
       },
     );
 
     try {
-      const { iduser } = await PulicModel.findById({ _id: idpublic });
+      const { iduser } = await PulicModel.findById({ _id: id });
       const { username } = await userModel.findById({ _id: iduser });
 
       const notificacao = new NotifModel(
@@ -23,7 +22,7 @@ class Like {
           iduser,
           type: 'Like',
           content: `@${username} curtiu sua publicacao`,
-          idpublic,
+          idpublic: id,
         },
       );
 

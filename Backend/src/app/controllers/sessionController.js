@@ -19,6 +19,8 @@ class SessionnController {
       _id, name, username, nascimento,
     } = user;
 
+    res.username = username;
+
     return res.json({
       user: {
         _id,

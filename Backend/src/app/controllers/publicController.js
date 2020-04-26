@@ -56,6 +56,14 @@ class PublicController {
     return res.json(p);
   }
 
+  async indexuser(req, res) {
+    const { id } = req.params;
+
+    const publication = await PublicModel.find({ iduser: id });
+
+    return res.json(publication);
+  }
+
   async getPic(req, res) {
     const { path } = req.body;
     const fileUrl = await FirebaseAcess.getFile(path);
